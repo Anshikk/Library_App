@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import BookModel from "../../../models/BookModel";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { ReturnBook } from "./ReturnBook";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 export const Carousel = () => {
@@ -9,44 +10,6 @@ export const Carousel = () => {
     const [books, setBooks] = useState<BookModel[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState(null);
-
-
-    // useEffect(() => {
-    //     const fetchBooks = async () => {
-    //         const baseUrl = "http://localhost:8080/api/books";
-
-    //         try {
-    //             const url = `${baseUrl}`;
-    //             const response = await fetch(url);
-
-    //             if (!response.ok) {
-    //                 throw new Error('Something went wrong!');
-    //             }
-
-    //             const responseData = await response.json();
-
-    //             const loadedBooks = responseData._embedded.books.map(bookData => ({
-    //                 id: bookData.id,
-    //                 title: bookData.title,
-    //                 author: bookData.author,
-    //                 description: bookData.description,
-    //                 copies: bookData.copies,
-    //                 copiesAvailable: bookData.copies_available, // Ensure correct camelCase
-    //                 category: bookData.category,
-    //                 img: bookData.img,
-    //             }));
-
-    //             setBooks(loadedBooks);
-    //             setIsLoading(false);
-    //         } catch (error) {
-    //             setIsLoading(false);
-    //             setHttpError(error.message);
-    //         }
-    //     };
-
-    //     fetchBooks();
-    // }, []);
-
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -58,12 +21,12 @@ export const Carousel = () => {
 
             if (!response.ok) {
                 throw new Error('Something went wrong!');
+                
             }
-            console.log(response)
+          
             const responseJson = await response.json();
 
-            const responseData = responseJson._embedded.books;
-            
+            const responseData = responseJson._embedded.books;      
 
             const loadedBooks: BookModel[] = [];
 
@@ -148,14 +111,15 @@ export const Carousel = () => {
             </div>
 
             {/* Mobile */}
-            {/* <div className='d-lg-none mt-3'>
+            <div className='d-lg-none mt-3'>
                 <div className='row d-flex justify-content-center align-items-center'>
-                    <ReturnBook book={books[7]} key={books[7].id}/>
+                    {/* <ReturnBook book={books[7]} key={books[7].id}/> */}
+                    
                 </div>
             </div>
             <div className='homepage-carousel-title mt-3'>
-                <a className="btn btn-outline-secondary btn-lg" href="/#">View More</a>
-            </div> */}
+                <Link className="btn btn-outline-secondary btn-lg" to="/search">View More</Link>
+            </div>
         </div>
     );
 }
